@@ -14,7 +14,7 @@ pipeline {
                 // 2. 빌드 성공 시에만 기존 컨테이너 교체
                 sh 'docker stop my-app-container || true'
                 sh 'docker rm my-app-container || true'
-                sh 'docker run -d --name my-app-container -p 80:80 my-jenkins-app'
+                sh 'docker run -d --name my-app-container -p 8081:80 my-jenkins-app'
             }
         }
     }
