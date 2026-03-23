@@ -1,0 +1,12 @@
+{
+  "name": "cicd-test-portal",
+  "version": "1.0.0",
+  "description": "CI/CD Test Portal",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "dependencies": {
+    "serve": "^14.2.4"
+  }
+}

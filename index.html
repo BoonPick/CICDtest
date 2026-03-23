@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CI/CD Test Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <main class="container">
+        <h1>CI/CD Test Portal</h1>
+        <p class="subtitle">GitHub Actions automated deployment validation</p>
+
+        <section class="status-card">
+            <div class="status-info">
+                <p class="status-label">Deployment Status</p>
+                <div class="status-value">
+                    <span class="pulse"></span>
+                    Operational
+                </div>
+            </div>
+            <div class="status-info" style="text-align: right;">
+                <p class="status-label">Build Version</p>
+                <p class="status-value" id="build-version">v1.0.0</p>
+            </div>
+        </section>
+
+        <section class="content">
+            <p style="margin-bottom: 25px; color: var(--text-secondary);">
+                This is a sample web application designed to test Continuous Integration and Continuous Deployment (CI/CD) pipelines. 
+                Whenever code is pushed to the repository, a GitHub Actions workflow is triggered to validate the build.
+            </p>
+            
+            <div class="button-group">
+                <button id="trigger-action">Check Build Status</button>
+                <a href="https://github.com/Gnomonn/CICDtest" target="_blank" style="text-decoration: none;">
+                    <button class="secondary">View Repository</button>
+                </a>
+            </div>
+        </section>
+
+        <footer>
+            <p>Pushed to <a href="https://github.com/Gnomonn/CICDtest.git" class="repo-link">Gnomonn/CICDtest</a></p>
+            <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.6;">&copy; 2024 CI/CD Test Environment</p>
+        </footer>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
