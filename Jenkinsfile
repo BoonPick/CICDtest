@@ -9,7 +9,7 @@ pipeline {
 
         // 배포 서버 정보
         TARGET_SERVER = "163.239.77.69" 
-        TARGET_USER = "sogang009"
+        TARGET_USER = "sogang009@SGVDI.local"
         SSH_CRED_ID = "deploy-server-ssh"
     }
 
