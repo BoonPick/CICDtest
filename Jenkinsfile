@@ -1,20 +1,52 @@
 pipeline {
     agent any
+    
+    environment {
+        // Docker Hub 정보
+        DOCKER_HUB_USER = "jaeyoungkimdockerhub"
+        IMAGE_NAME = "${DOCKER_HUB_USER}/boonpick-cicdtest"
+        DOCKER_HUB_CREDS = "docker-hub-credentials" // 위에서 만든 ID와 동일해야 함
+
+        // 배포 서버 정보
+        TARGET_SERVER = "163.239.77.69" 
+        TARGET_USER = "sogang009"
+        SSH_CRED_ID = "deploy-server-ssh"
+    }
+
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-        stage('Deploy') {
+
+        stage('Build and Push to Docker Hub') {
             steps {
-                // 1. 먼저 빌드를 성공시킨다 (실패하면 여기서 중단됨)
-                sh 'docker build -t my-jenkins-app .'
-                
-                // 2. 빌드 성공 시에만 기존 컨테이너 교체
-                sh 'docker stop my-app-container || true'
-                sh 'docker rm my-app-container || true'
-                sh 'docker run -d --name my-app-container -p 8081:80 my-jenkins-app'
+                script {
+                    // 1. 도커 허브 로그인 및 이미지 빌드/푸시
+                    docker.withRegistry('', "${DOCKER_HUB_CREDS}") {
+                        def myImage = docker.build("${IMAGE_NAME}:${env.BUILD_NUMBER}")
+                        myImage.push()
+                        myImage.push('latest')
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to Remote Server') {
+            steps {
+                sshagent(["${SSH_CRED_ID}"]) {
+                    // 2. 배포 서버에서 이미지 Pull 및 실행 (퍼블릭이므로 로그인 불필요)
+                    sh """
+                        ssh -o StrictHostKeyChecking=no ${TARGET_USER}@${TARGET_SERVER} "
+                            docker pull ${IMAGE_NAME}:latest && \
+                            docker stop my-app-container 2>/dev/null || true && \
+                            docker rm my-app-container 2>/dev/null || true && \
+                            docker run -d --name my-app-container -p 8081:80 ${IMAGE_NAME}:latest && \
+                            docker image prune -f
+                        "
+                    """
+                }
             }
         }
     }
