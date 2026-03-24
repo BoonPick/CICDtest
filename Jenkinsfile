@@ -8,9 +8,9 @@ pipeline {
         DOCKER_HUB_CREDS = "docker-hub-credentials" // 위에서 만든 ID와 동일해야 함
 
         // 배포 서버 정보
-        TARGET_SERVER = "163.239.77.69" 
-        TARGET_USER = "sogang009@SGVDI.local"
-        SSH_CRED_ID = "deploy-server-ssh"
+        TARGET_SERVER = "163.239.77.78" 
+        TARGET_USER = "sogang018@SGVDI.local"
+        SSH_CRED_ID = "team"
     }
 
     stages {
