@@ -2,4 +2,4 @@
 
 This is a test repository for CI/CD setup.
 
-test01
+test02
